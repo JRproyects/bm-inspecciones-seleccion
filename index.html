@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM Inspecciones - Selección de Personal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #8b0000 0%, #000000 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo h1 span {
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .logo p {
+            color: #cccccc;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-top: 5px solid #ff0000;
+        }
+
+        .form-container h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .form-container p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .warning {
+            background: #fff3f3;
+            border-left: 4px solid #ff0000;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+
+        .warning p {
+            color: #8b0000;
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff0000;
+        }
+
+        .form-group input[type="file"] {
+            padding: 10px;
+            background: #f9f9f9;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #8b0000 0%, #000000 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .checkbox-group a {
+            color: #8b0000;
+            text-decoration: none;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>BM <span>INSPECCIONES</span></h1>
+            <p>Selección de Personal</p>
+        </div>
+
+        <div class="form-container">
+            <h2>Postulación</h2>
+            <p>Complete sus datos para comenzar el cuestionario</p>
+
+            <div class="warning">
+                <p><strong>⚠️ IMPORTANTE:</strong> Una vez iniciado el cuestionario, dispondrá de 15 minutos para completarlo. En caso de cortes de internet o cierre del navegador, se guardará el progreso hasta donde haya llegado. No se permitirán reinicios.</p>
+            </div>
+
+            <form id="applicationForm" onsubmit="handleApplication(event)">
+                <div class="form-group">
+                    <label>Nombre Completo *</label>
+                    <input type="text" id="fullName" required placeholder="Ej: Juan Pérez">
+                </div>
+
+                <div class="form-group">
+                    <label>DNI *</label>
+                    <input type="text" id="dni" required maxlength="8" pattern="\d*" placeholder="8 dígitos sin puntos">
+                </div>
+
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="email" required placeholder="correo@ejemplo.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Teléfono *</label>
+                    <input type="tel" id="phone" required placeholder="Ej: 2991234567">
+                </div>
+
+                <div class="form-group">
+                    <label>Adjuntar Curriculum Vitae (PDF, DOC, DOCX) *</label>
+                    <input type="file" id="cv" required accept=".pdf,.doc,.docx">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">Acepto los <a href="#">términos y condiciones</a> y confirmo que los datos son correctos</label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">Comenzar Cuestionario →</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleApplication(event) {
+            event.preventDefault();
+            
+            const formData = {
+                nombre: document.getElementById('fullName').value,
+                dni: document.getElementById('dni').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('phone').value,
+                cv: document.getElementById('cv').files[0]?.name || 'No adjunto',
+                fechaPostulacion: new Date().toISOString()
+            };
+
+            // Guardar datos en sessionStorage para usar en el cuestionario
+            sessionStorage.setItem('candidato', JSON.stringify(formData));
+            
+            // Redirigir al cuestionario
+            window.location.href = 'cuestionario.html';
+        }
+    </script>
+</body>
+</html>
